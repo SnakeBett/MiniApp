@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIX Premium - Copia e Cola</title>
+    <style>
+        /* Estilo básico do corpo */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Container principal */
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* Ícone Premium */
+        .premium-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        /* Título */
+        h1 {
+            color: #FFD700;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Caixa de código */
+        .code-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-weight: 600;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            user-select: all;
+        }
+
+        /* Botão de copiar */
+        .copy-button {
+            background: linear-gradient(45deg, #FFD700, #e6c200);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .copy-button:hover {
+            background: linear-gradient(45deg, #e6c200, #ccab00);
+        }
+
+        /* Ícone de copiar */
+        .copy-icon {
+            margin-right: 0.5rem;
+        }
+
+        /* Banner de fundo */
+        .background-banner {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            z-index: -1;
+            background: url('https://i.imgur.com/y4aV6kz.jpg') no-repeat center center/cover;
+            opacity: 0.4;
+            border-radius: 12px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .code-box {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+            .copy-button {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background-banner"></div>
+        <div class="premium-icon">💎</div>
+        <h1>PIX Premium Copia e Cola</h1>
+        <div class="code-box" id="pix-code"></div>
+        <button class="copy-button" onclick="copyCode()">
+            <span class="copy-icon">📋</span> Copiar
+        </button>
+    </div>
+
+    <script>
+        // Obtendo o código PIX da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pixCode = urlParams.get('code');
+        document.getElementById('pix-code').innerText = pixCode;
+
+        // Função para copiar o código PIX
+        function copyCode() {
+            const codeElement = document.getElementById('pix-code');
+            navigator.clipboard.writeText(codeElement.innerText).then(() => {
+                alert('Código copiado!');
+            });
+        }
+    </script>
+</body>
+</html>
