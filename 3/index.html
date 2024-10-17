@@ -20,7 +20,7 @@
 
         /* Container principal */
         .container {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.15);
             padding: 2rem;
             border-radius: 12px;
             text-align: center;
@@ -31,24 +31,18 @@
             position: relative;
         }
 
-        /* Ícone Premium */
-        .premium-icon {
-            font-size: 3rem;
-            color: #FFD700;
-            margin-bottom: 1rem;
-        }
-
         /* Título */
         h1 {
             color: #FFD700;
             font-size: 2rem;
             margin-bottom: 1.5rem;
             font-weight: bold;
+            letter-spacing: 1px;
         }
 
         /* Caixa de código */
         .code-box {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.25);
             border: 2px solid #FFD700;
             border-radius: 8px;
             padding: 1rem;
@@ -73,18 +67,14 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .copy-button:hover {
             background: linear-gradient(45deg, #e6c200, #ccab00);
         }
 
-        /* Ícone de copiar */
-        .copy-icon {
-            margin-right: 0.5rem;
-        }
-
-        /* Banner de fundo */
+        /* Fundo dinâmico */
         .background-banner {
             position: absolute;
             top: -20px;
@@ -93,7 +83,7 @@
             bottom: -20px;
             z-index: -1;
             background: url('https://i.imgur.com/y4aV6kz.jpg') no-repeat center center/cover;
-            opacity: 0.4;
+            opacity: 0.3;
             border-radius: 12px;
         }
 
@@ -116,11 +106,10 @@
 <body>
     <div class="container">
         <div class="background-banner"></div>
-        <div class="premium-icon">💎</div>
         <h1>PIX Premium Copia e Cola</h1>
         <div class="code-box" id="pix-code"></div>
         <button class="copy-button" onclick="copyCode()">
-            <span class="copy-icon">📋</span> Copiar
+            Copiar Código PIX
         </button>
     </div>
 
