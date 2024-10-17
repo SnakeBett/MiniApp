@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIX Premium - Copia e Cola</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            border: 2px solid #FFD700; /* Cor ouro para Premium */
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .code-box {
+            background-color: #f8f9fc;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: #333;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-weight: 600;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            user-select: all;
+        }
+
+        .copy-button {
+            background-color: #FFD700;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .copy-button:hover {
+            background-color: #e6c200;
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .code-box {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+            .copy-button {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PIX Premium Copia e Cola</h1>
+        <div class="code-box" id="pix-code"></div>
+        <button class="copy-button" onclick="copyCode()">Copiar</button>
+    </div>
+
+    <script>
+        // Obtendo o código PIX da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pixCode = urlParams.get('code');
+        document.getElementById('pix-code').innerText = pixCode;
+
+        // Função para copiar o código PIX
+        function copyCode() {
+            const codeElement = document.getElementById('pix-code');
+            navigator.clipboard.writeText(codeElement.innerText).then(() => {
+                alert('Código copiado!');
+            });
+        }
+    </script>
+</body>
+</html>
