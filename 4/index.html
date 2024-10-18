@@ -2,213 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="PIX Premium Copia e Cola. Copie e utilize o código PIX de forma rápida e prática.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIX Premium - Copia e Cola</title>
+    
+    <!-- Preload Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle at top, #1a1a1d, #111);
-            color: white;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            margin: 2rem auto 0 auto;
-            transition: transform 0.3s ease;
-        }
-
-        .container:hover {
-            transform: scale(1.02);
-        }
-
-        h1 {
-            color: #FFD700;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .code-box {
-            background: #2c2c2c;
-            border: 2px solid #FFD700;
-            border-radius: 12px;
-            padding: 1rem;
-            font-size: 1.2rem;
-            color: #fff;
-            word-wrap: break-word;
-            line-height: 1.5;
-            font-weight: 600;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-            user-select: all;
-            border-color: #FFD700;
-            text-shadow: -1px -1px 0 #2c2c2c, 1px -1px 0 #2c2c2c, -1px 1px 0 #2c2c2c, 1px 1px 0 #2c2c2c;
-        }
-
-        .copy-button {
-            background: linear-gradient(45deg, #FFD700, #ff8c00);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            font-size : 1.2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .copy-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .progress-container {
-            width: 100%;
-            background: #444;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: #FFD700;
-            border-radius:  10px;
-            transition: width 0.3s ease;
-        }
-
-        .timer {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #FFD700;
-            margin-top: 0.5rem;
-        }
-
-        .section {
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.6rem;
-            }
-            .code-box {
-                font-size: 1rem;
-                padding: 0.8rem;
-            }
-            .copy-button {
-                font-size: 1rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <h1>PIX Premium Copia e Cola</h1>
-    
-    <!-- Container onde a seção específica será exibida -->
-    <div id="section-container"></div>
+    <!-- Container principal compacto -->
+    <div class="container">
+        <h1>PIX Premium Copia e Cola</h1>
+        <div class="code-box" id="pix-code"></div>
+        <button class="copy-button" aria-label="Copiar Código PIX" onclick="copyCode()">
+            <i class="fas fa-copy"></i> Copiar Código PIX
+        </button>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="timer" id="timer"></div>
+    </div>
 
-    <script>
-        // Função para extrair o parâmetro 'code' da URL
-        function getCodeFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('code'); // Retorna o valor do parâmetro "code"
-        }
-
-        // Função para criar a seção única com o código PIX da URL
-        function createPixSection(pixCode) {
-            const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
-            let startTime = new Date().getTime();
-
-            // Criar HTML da seção específica
-            const sectionHTML = `
-                <div class="container section">
-                    <h2>Código PIX</h2>
-                    <div class="code-box" id="pix-code">${pixCode}</div>
-                    <button class="copy-button" onclick="copyCode()">
-                        <i class="fas fa-copy"></i> Copiar Código PIX
-                    </button>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progress-bar"></div>
-                    </div>
-                    <div class="timer" id="timer"></div>
-                </div>
-            `;
-
-            // Adicionar a seção ao container
-            document.getElementById('section-container').innerHTML = sectionHTML;
-
-            // Iniciar o timer da seção específica
-            updateProgressBar(startTime, expirationTime);
-        }
-
-        // Função para copiar o código PIX
-        function copyCode() {
-            const codeElement = document.getElementById('pix-code');
-            navigator.clipboard.writeText(codeElement.innerText).then(() => {
-                alert('Código copiado!');
-                document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
-            });
-        }
-
-        // Função para atualizar a barra de progresso e o timer
-        function updateProgressBar(startTime, expirationTime) {
-            const progressBar = document.getElementById('progress-bar');
-            const timerElement = document.getElementById('timer');
-
-            function update() {
-                const currentTime = new Date().getTime();
-                const timeElapsed = currentTime - startTime;
-                const timeRemaining = expirationTime - timeElapsed;
-                const progress = (timeRemaining / expirationTime) * 100;
-
-                progressBar.style.width = `${progress}%`;
-
-                const minutes = Math.floor(timeRemaining / 60000);
-                const seconds = Math.floor((timeRemaining % 60000) / 1000);
-
-                timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-                if (timeRemaining <= 0) {
-                    progressBar.style.width = '0%';
-                    timerElement.innerText = '00:00';
-                    alert('Tempo expirado para o PIX!');
-                } else {
-                    setTimeout(update, 1000); // Atualizar a cada segundo
-                }
-            }
-
-            update();
-        }
-
-        // Quando a página carregar, criamos a seção com base no parâmetro 'code'
-        window.onload = function() {
-            const pixCode = getCodeFromURL();
-            if (pixCode) {
-                createPixSection(pixCode); // Cria a seção com o código PIX extraído da URL
-            } else {
-                alert('Nenhum código PIX encontrado na URL!');
-            }
-        };
-    </script>
+    <!-- External JS -->
+    <script defer src="scripts.js"></script>
 </body>
 </html>
