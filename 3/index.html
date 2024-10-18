@@ -31,12 +31,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             margin: 2rem auto 0 auto;
-            transition: transform 0.3s ease;
             position: relative; /* Para posicionar a animação de dinheiro */
-        }
-
-        .container:hover {
-            transform: scale(1.02);
         }
 
         /* Título menor e mais compacto */
@@ -88,8 +83,10 @@
         }
 
         /* Efeito de Dinheiro Voando */
- .money-fly {
+        .money-fly {
             position: absolute;
+            width: 50px; /* Tamanho da imagem de dinheiro */
+            height: 50px; /* Tamanho da imagem de dinheiro */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -135,6 +132,9 @@
                 moneyFly.src = 'money.png';
                 moneyFly.className = 'money-fly';
                 document.querySelector('.container').appendChild(moneyFly);
+                // Animação de dinheiro voando
+                moneyFly.style.animation = 'fly 1.5s ease-out';
+                moneyFly.style.animationFillMode = 'forwards';
             });
         }
     </script>
