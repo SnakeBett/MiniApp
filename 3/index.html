@@ -96,7 +96,7 @@
         }
 
         .progress-bar {
-            height: 10px;
+ height: 10px;
             background: #FFD700;
             border-radius:  10px;
             transition: width 0.3s ease;
@@ -158,32 +158,35 @@
         const progressBar = document.getElementById('progress-bar');
         const timerElement = document.getElementById('timer');
         const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
-        let startTime = localStorage.getItem('startTime');
+        let startTime = new Date().getTime();
+        let timeRemaining = localStorage.getItem('timeRemaining');
 
-        if (!startTime) {
-            startTime = new Date().getTime();
-            localStorage.setItem('startTime', startTime);
+        if (timeRemaining) {
+            startTime = new Date().getTime() - timeRemaining;
+        } else {
+            localStorage.setItem('timeRemaining', expirationTime);
         }
 
         function updateProgressBar() {
             const currentTime = new Date().getTime();
-            const timeElapsed = currentTime - startTime;
-            const timeRemaining = expirationTime - timeElapsed;
+            timeRemaining = expirationTime - (currentTime - startTime);
+            localStorage.setItem('timeRemaining', timeRemaining);
+
+            const progress = (timeRemaining / expirationTime) * 100;
+
+            progressBar.style.width = `${progress}%`;
+
+            const minutes = Math.floor(timeRemaining / 60000);
+            const seconds = Math.floor((timeRemaining % 60000) / 1000);
+
+            timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
             if (timeRemaining <= 0) {
                 progressBar.style.width = '0%';
                 timerElement.innerText = '00:00';
                 alert('Tempo expirado!');
-                localStorage.removeItem('startTime');
+                localStorage.removeItem('timeRemaining');
             } else {
-                const progress = (timeElapsed / expirationTime) * 100;
-                progressBar.style.width = `${progress}%`;
-
-                const minutes = Math.floor(timeRemaining / 60000);
-                const seconds = Math.floor((timeRemaining % 60000) / 1000);
-
-                timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
                 setTimeout(updateProgressBar, 1000); // Atualizar a cada segundo
             }
         }
