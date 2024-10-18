@@ -17,6 +17,8 @@
             background: radial-gradient(circle at top, #1a1a1d, #111);
             color: white;
             overflow: hidden; /* Remove a rolagem */
+            padding: 1rem;
+            box-sizing: border-box; /* Evita que conteúdo ultrapasse a tela */
         }
 
         /* Efeito sutil de textura */
@@ -34,11 +36,11 @@
         /* Container principal com glassmorphism */
         .container {
             background: rgba(255, 255, 255, 0.05);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 15px;
             text-align: center;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.18);
@@ -48,8 +50,8 @@
         /* Título */
         h1 {
             color: #FFD700;
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -60,9 +62,9 @@
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid #FFD700;
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 1.3rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
             color: white;
             word-wrap: break-word;
             line-height: 1.5;
@@ -77,13 +79,14 @@
             background: linear-gradient(45deg, #FFD700, #ff8c00);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
             border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
         }
 
         .copy-button:hover {
@@ -94,15 +97,15 @@
         /* Responsividade */
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             .code-box {
                 font-size: 1rem;
-                padding: 1rem;
+                padding: 0.8rem;
             }
             .copy-button {
                 font-size: 1rem;
-                padding: 0.75rem 1.5rem;
+                padding: 0.75rem 1.25rem;
             }
         }
     </style>
