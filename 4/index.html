@@ -22,20 +22,24 @@
             overflow: hidden;
             padding: 1rem;
             box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         /* Container principal fixo no topo e mais compacto */
         .container {
             background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 10px;
             text-align: center;
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            margin: 2rem auto 0 auto;
+            margin: auto;
             transition: transform 0.3s ease;
         }
 
@@ -56,7 +60,7 @@
             background: #2c2c2c;
             border: 2px solid #FFD700;
             border-radius: 12px;
-            padding: 1rem;
+            padding: 1.5rem;
             font-size: 1.2rem;
             color: #fff;
             word-wrap: break-word;
@@ -80,6 +84,23 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
             margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-button:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease;
+        }
+
+        .copy-button:hover:after {
+            left: 0;
         }
 
         .copy-button:hover {
@@ -103,10 +124,29 @@
         }
 
         .timer {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #FFD700;
             margin-top: 0.5rem;
+        }
+
+        .reset-button {
+            background: #ff4141;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+            width: 100%;
+            display: none;
+            transition: transform 0.3s ease;
+        }
+
+        .reset-button:hover {
+            transform: scale(1.05);
         }
 
         @media (max-width: 600px) {
@@ -115,12 +155,33 @@
             }
             .code-box {
                 font-size: 1rem;
-                padding: 0.8rem;
+                padding: 1rem;
             }
-            .copy-button {
+            .copy-button, .reset-button {
                 font-size: 1rem;
-                padding: 0.8rem 1.2rem;
+                padding: 0.8rem 1rem;
             }
+        }
+
+        /* Estilo para o modal de alerta */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            color: white;
+        }
+
+        .modal.active {
+            display: block;
         }
     </style>
 </head>
@@ -136,28 +197,29 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         <div class="timer" id="timer"></div>
+        <button class="reset-button" id="reset-button" onclick="resetTimer()">Reiniciar</button>
+    </div>
+
+    <!-- Modal de expiração -->
+    <div class="modal" id="expired-modal">
+        <h2>O tempo expirou!</h2>
+        <p>O código PIX não é mais válido. Clique em "Reiniciar" para gerar um novo código.</p>
     </div>
 
     <!-- JavaScript embutido -->
     <script>
         // Obtendo o código PIX da URL
         const urlParams = new URLSearchParams(window.location.search);
-        const pixCode = urlParams.get('code');
+        const pixCode = urlParams.get('code') || 'CODIGO-PIX-TESTE';
         document.getElementById('pix-code').innerText = pixCode;
 
-        // Função para copiar o código PIX
-        function copyCode() {
-            const codeElement = document.getElementById('pix-code');
-            navigator.clipboard.writeText(codeElement.innerText).then(() => {
-                document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
-            });
-        }
-
-        // Configuração da barra de expiração
         const progressBar = document.getElementById('progress-bar');
         const timerElement = document.getElementById('timer');
+        const resetButton = document.getElementById('reset-button');
+        const modal = document.getElementById('expired-modal');
         const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
         let startTime = new Date().getTime();
+        let timerInterval;
 
         function updateProgressBar() {
             const currentTime = new Date().getTime();
@@ -173,11 +235,10 @@
             timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
             if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
                 progressBar.style.width = '0%';
                 timerElement.innerText = '00:00';
                 showTimeExpired();
-            } else {
-                setTimeout(updateProgressBar, 1000);
             }
         }
 
@@ -185,9 +246,30 @@
             const codeElement = document.getElementById('pix-code');
             codeElement.innerText = 'O código expirou!';
             codeElement.style.color = 'red';
+            resetButton.style.display = 'block';
+            modal.classList.add('active');
         }
 
-        updateProgressBar();
+        function resetTimer() {
+            startTime = new Date().getTime();
+            modal.classList.remove('active');
+            resetButton.style.display = 'none';
+            document.getElementById('pix-code').innerText = pixCode;
+            document.getElementById('pix-code').style.color = '#fff';
+            timerInterval = setInterval(updateProgressBar, 1000);
+        }
+
+        function copyCode() {
+            const codeElement = document.getElementById('pix-code');
+            navigator.clipboard.writeText(codeElement.innerText).then(() => {
+                document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
+                setTimeout(() => {
+                    document.querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i> Copiar Código PIX';
+                }, 2000);
+            });
+        }
+
+        timerInterval = setInterval(updateProgressBar, 1000);
     </script>
 </body>
 </html>
