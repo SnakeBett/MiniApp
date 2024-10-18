@@ -86,6 +86,22 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
         }
 
+        /* Barra de expiração */
+        .progress-container {
+            width: 100%;
+            background: #444;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: # FFD700;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
         /* Responsividade */
         @media (max-width: 600px) {
             h1 {
@@ -110,6 +126,9 @@
         <button class="copy-button" onclick="copyCode()">
             <i class="fas fa-copy"></i> Copiar Código PIX
         </button>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </ div>
     </div>
 
     <script>
@@ -126,6 +145,29 @@
                 document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
             });
         }
+
+        // Configuração da barra de expiração
+        const progressBar = document.getElementById('progress-bar');
+        const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
+        let startTime = new Date().getTime();
+
+        function updateProgressBar() {
+            const currentTime = new Date().getTime();
+            const timeElapsed = currentTime - startTime;
+            const timeRemaining = expirationTime - timeElapsed;
+            const progress = (timeRemaining / expirationTime) * 100;
+
+            progressBar.style.width = `${progress}%`;
+
+            if (timeRemaining <= 0) {
+                progressBar.style.width = '0%';
+                alert('Tempo expirado!');
+            } else {
+                setTimeout(updateProgressBar, 1000); // Atualizar a cada segundo
+            }
+        }
+
+        updateProgressBar();
     </script>
 </body>
 </html>
