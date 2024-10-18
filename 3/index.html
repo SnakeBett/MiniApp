@@ -96,7 +96,7 @@
         }
 
         .progress-bar {
-            height: 10px;
+ height: 10px;
             background: #FFD700;
             border-radius:  10px;
             transition: width 0.3s ease;
@@ -159,11 +159,19 @@
         const timerElement = document.getElementById('timer');
         const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
         let startTime = new Date().getTime();
+        let timeRemaining = localStorage.getItem('timeRemaining');
+
+        if (timeRemaining) {
+            startTime = new Date().getTime() - timeRemaining;
+        } else {
+            localStorage.setItem('timeRemaining', expirationTime);
+        }
 
         function updateProgressBar() {
             const currentTime = new Date().getTime();
-            const timeElapsed = currentTime - startTime;
-            const timeRemaining = expirationTime - timeElapsed;
+            timeRemaining = expirationTime - (currentTime - startTime);
+            localStorage.setItem('timeRemaining', timeRemaining);
+
             const progress = (timeRemaining / expirationTime) * 100;
 
             progressBar.style.width = `${progress}%`;
@@ -177,6 +185,7 @@
                 progressBar.style.width = '0%';
                 timerElement.innerText = '00:00';
                 alert('Tempo expirado!');
+                localStorage.removeItem('timeRemaining');
             } else {
                 setTimeout(updateProgressBar, 1000); // Atualizar a cada segundo
             }
