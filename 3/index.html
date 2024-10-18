@@ -17,28 +17,31 @@
             overflow: hidden; /* Remove a rolagem */
             padding: 1rem;
             box-sizing: border-box; /* Evita que conteúdo ultrapasse a tela */
-            position: relative;
         }
 
         /* Container principal fixo no topo e mais compacto */
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
             border-radius: 10px;
             text-align: center;
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             margin: 2rem auto 0 auto;
-            position: relative; /* Para posicionar a animação de partículas */
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
         }
 
         /* Título menor e mais compacto */
         h1 {
             color: #FFD700;
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
             font-weight: 700;
             letter-spacing: 1px;
@@ -51,7 +54,7 @@
             border: 2px solid #FFD700;
             border-radius: 12px;
             padding: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #fff; /* Cor do texto branca */
             word-wrap: break-word;
             line-height: 1.5;
@@ -67,8 +70,8 @@
             background: linear-gradient(45deg, #FFD700, #ff8c00);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            font-size : 1.2rem;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
@@ -83,46 +86,18 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
         }
 
-        /* Efeito de partículas */
-        .particle {
-            position: absolute ;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #FFD700;
-            animation: particle 1.5s ease-out;
-        }
-
-        @keyframes particle {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.6rem;
             }
-            100% {
-                transform: scale(1);
-                opacity: 1;
+            .code-box {
+                font-size: 1rem;
+                padding: 0.8rem;
             }
-        }
-
-        /* Feedback visual */
-        .success-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #FFD700;
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
+            .copy-button {
+                font-size: 1rem;
+                padding: 0.8rem 1.2rem;
             }
         }
     </style>
@@ -135,7 +110,6 @@
         <button class="copy-button" onclick="copyCode()">
             <i class="fas fa-copy"></i> Copiar Código PIX
         </button>
-        <div class="success-message" id="success-message">Código copiado!</div>
     </div>
 
     <script>
@@ -148,31 +122,9 @@
         function copyCode() {
             const codeElement = document.getElementById('pix-code');
             navigator.clipboard.writeText(codeElement.innerText).then(() => {
-                // Criar partículas
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.left = `${Math.random() * 100}%`;
-                    document.querySelector('.container').appendChild(particle);
-                }
-
-                // Mostrar mensagem de sucesso
-                document.getElementById('success-message').style.opacity = '1';
-
-                // Alterar fundo
-                document.body.style.background = `radial-gradient(circle at top, ${getRandomColor()}, ${getRandomColor()})`;
+                alert('Código copiado!');
+                document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
             });
-        }
-
-        // Função para gerar cor aleatória
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
     </script>
 </body>
