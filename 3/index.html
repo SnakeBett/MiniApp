@@ -97,9 +97,16 @@
 
         .progress-bar {
             height: 10px;
-            background: # FFD700;
-            border-radius: 10px;
+            background: #FFD700;
+            border-radius:  10px;
             transition: width 0.3s ease;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-top: 0.5rem;
         }
 
         /* Responsividade */
@@ -128,7 +135,8 @@
         </button>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
-        </ div>
+        </div>
+        <div class="timer" id="timer"></div>
     </div>
 
     <script>
@@ -148,6 +156,7 @@
 
         // Configuração da barra de expiração
         const progressBar = document.getElementById('progress-bar');
+        const timerElement = document.getElementById('timer');
         const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
         let startTime = new Date().getTime();
 
@@ -159,8 +168,14 @@
 
             progressBar.style.width = `${progress}%`;
 
+            const minutes = Math.floor(timeRemaining / 60000);
+            const seconds = Math.floor((timeRemaining % 60000) / 1000);
+
+            timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
             if (timeRemaining <= 0) {
                 progressBar.style.width = '0%';
+                timerElement.innerText = '00:00';
                 alert('Tempo expirado!');
             } else {
                 setTimeout(updateProgressBar, 1000); // Atualizar a cada segundo
