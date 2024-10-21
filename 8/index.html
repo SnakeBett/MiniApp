@@ -102,10 +102,10 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
         }
 
-        /* Barra de progresso estilizada */
+        /* Barra de progresso */
         .progress-container {
             width: 100%;
-            background: #444;
+            background: #222;
             border-radius: 10px;
             overflow: hidden;
             margin-top: 1rem;
@@ -115,18 +115,9 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #00C9FF, #92FE9D);
+            background: linear-gradient(90deg, #5c5c5c, #838383);
             width: 100%;
-            animation: load 15s linear forwards;
-        }
-
-        @keyframes load {
-            from {
-                width: 100%;
-            }
-            to {
-                width: 0%;
-            }
+            transition: width 1s linear;
         }
 
         .timer {
