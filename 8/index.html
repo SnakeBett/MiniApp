@@ -27,18 +27,52 @@
             padding-top: 1rem;
         }
 
-        /* Container principal fixo no topo e mais compacto */
+        /* Container principal */
         .container {
+            position: relative;
             background: rgba(255, 255, 255, 0.05);
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: 14px;
             text-align: center;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
             margin-bottom: 1rem;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* Borda animada */
+        .blob {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background-color: #FFD700;
+            opacity: 0.7;
+            filter: blur(30px);
+            animation: blob-bounce 10s infinite ease;
+        }
+
+        @keyframes blob-bounce {
+            0% {
+                transform: translate(-100%, -100%) translate3d(0, 0, 0);
+            }
+            25% {
+                transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+            }
+            50% {
+                transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+            }
+            75% {
+                transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+            }
+            100% {
+                transform: translate(-100%, -100%) translate3d(0, 0, 0);
+            }
         }
 
         h1 {
@@ -219,8 +253,9 @@
     </style>
 </head>
 <body>
-    <!-- Container principal compacto -->
+    <!-- Borda fluida animada -->
     <div class="container">
+        <div class="blob"></div>
         <h1>PIX Premium Copia e Cola</h1>
         <div class="code-box" id="pix-code"></div>
         <button class="copy-button" aria-label="Copiar Código PIX" onclick="copyCode()">
