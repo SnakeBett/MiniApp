@@ -102,10 +102,11 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
         }
 
-        /* Barra de progresso com o contador dentro */
+        /* Barra de progresso com o efeito de onda */
         .progress-container {
             width: 100%;
-            background: #2c2c2c; /* Fundo da barra */
+            height: 50px;
+            background: #2c2c2c;
             border-radius: 10px;
             overflow: hidden;
             position: relative;
@@ -113,16 +114,47 @@
         }
 
         .progress-bar {
-            height: 30px;
-            background: #ff8c00; /* Cor alaranjada para combinar com o botão */
+            height: 100%;
+            background: linear-gradient(45deg, #ff8c00, #ffbf00);
             border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
             transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
+        }
+
+        /* Ondas na barra de progresso */
+        .wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('https://i.imgur.com/ayZDZ6E.png') repeat-x;
+            opacity: 0.5;
+            animation: wave-animation 2s infinite linear;
+        }
+
+        @keyframes wave-animation {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Texto do timer dentro da barra */
+        .timer {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
             font-weight: bold;
-            color: #fff; /* Cor do timer */
+            line-height: 50px;
+            font-size: 1.2rem;
+            z-index: 1;
         }
 
         .step-by-step {
@@ -221,7 +253,8 @@
         </button>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar">
-                <span id="timer"></span> <!-- Colocando o contador dentro da barra -->
+                <div class="wave"></div> <!-- Efeito de onda -->
+                <div class="timer" id="timer"></div> <!-- Colocando o contador dentro da barra -->
             </div>
         </div>
         <div class="step-by-step">
