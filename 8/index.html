@@ -128,12 +128,17 @@
             margin-top: 0.5rem;
         }
 
+        /* Caixa de destaque para o passo a passo */
         .step-by-step {
             font-size: 0.9rem; /* Reduzido */
-            color: #FFD700;
-            margin-top: 0.8rem; /* Reduzido */
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo mais claro */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borda clara */
+            border-radius: 8px; /* Cantos arredondados */
+            padding: 0.8rem; /* Espaçamento interno */
+            margin-top: 1rem; /* Margem superior */
             text-align: left;
-            line-height: 1.2; /* Reduzido */
+            line-height: 1.4; /* Ajuste de espaçamento */
             font-weight: 500;
         }
 
@@ -222,14 +227,14 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         <div class="timer" id="timer"></div>
-        <p class="step-by-step">
+        <div class="step-by-step">
             Passo a passo para fazer o PIX:<br>
             1. Copie o código PIX acima.<br>
             2. Acesse o aplicativo do seu banco.<br>
             3. Escolha a opção de pagamento via PIX.<br>
             4. Selecione "PIX Copia e Cola" e cole o código.<br>
-             5. Confirme o valor e finalize o pagamento.
-        </p>
+            5. Confirme o valor e finalize o pagamento.
+        </div>
         <button class="reset-button" id="reset-button" onclick="resetTimer()">Reiniciar</button>
     </div>
 
