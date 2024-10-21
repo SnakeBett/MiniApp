@@ -2,351 +2,179 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="PIX Premium Copia e Cola. Copie e utilize o código PIX de forma rápida e prática.">
+    <meta name="description" content="Vários Loaders em CSS">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIX Premium - Copia e Cola</title>
-    
-    <!-- Preload Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>CSS Loaders - Exemplo</title>
     
     <!-- Estilos embutidos (CSS) -->
     <style>
-        /* Estilo do corpo */
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #111;
+            color: white;
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at top, #1a1a1d, #111);
-            color: white;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding-top: 1rem;
         }
 
-        /* Container principal */
-        .container {
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 14px;
+        header {
+            background: #222;
+            padding: 20px;
             text-align: center;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-            margin-bottom: 1rem;
-            z-index: 10;
-            overflow: hidden;
         }
 
-        /* Borda animada */
-        .blob {
-            position: absolute;
-            z-index: 1;
-            top: 50%;
-            left: 50%;
-            width: 350px;
-            height: 350px;
+        header h1 {
+            font-size: 2rem;
+            color: #FFD700;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .loader-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .loader-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        /* Loader circular */
+        .loader-1 {
+            width: 80px;
+            height: 80px;
+            border: 10px solid rgba(255, 255, 255, 0.2);
+            border-top: 10px solid #FFD700;
             border-radius: 50%;
-            background-color: #FFD700;
-            opacity: 0.7;
-            filter: blur(30px);
-            animation: blob-bounce 10s infinite ease;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
 
-        @keyframes blob-bounce {
+        /* Loader pulsante */
+        .loader-2 {
+            width: 50px;
+            height: 50px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
             0% {
-                transform: translate(-100%, -100%) translate3d(0, 0, 0);
-            }
-            25% {
-                transform: translate(-100%, -100%) translate3d(100%, 0, 0);
-            }
-            50% {
-                transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
-            }
-            75% {
-                transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+                transform: rotate(0deg);
             }
             100% {
-                transform: translate(-100%, -100%) translate3d(0, 0, 0);
+                transform: rotate(360deg);
             }
         }
 
-        h1 {
-            color: #FFD700;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
-        .code-box {
-            background: #2c2c2c;
-            border: 2px solid #FFD700;
-            border-radius: 12px;
-            padding: 1rem;
-            font-size: 1rem;
-            color: #fff;
-            word-wrap: break-word;
-            line-height: 1.4;
-            font-weight: 600;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-            user-select: all;
-            text-shadow: -1px -1px 0 #2c2c2c, 1px -1px 0 #2c2c2c, -1px 1px 0 #2c2c2c, 1px 1px 0 #2c2c2c;
-        }
-
-        .copy-button {
-            background: linear-gradient(45deg, #FFD700, #ff8c00);
-            color: white;
+        /* Botão para copiar o código */
+        .copy-btn {
+            background: #FFD700;
             border: none;
-            padding: 0.6rem 1rem;
-            font-size: 1.1rem;
-            border-radius: 10px;
+            padding: 10px;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
-            position: relative;
-            overflow: hidden;
+            margin-top: 10px;
+            transition: background 0.3s;
         }
 
-        .copy-button:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.4s ease;
+        .copy-btn:hover {
+            background: #ff8c00;
         }
 
-        .copy-button:hover:after {
-            left: 0;
-        }
-
-        .copy-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Barra de progresso */
-        .progress-container {
-            width: 100%;
-            background: #222;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 1rem;
-            position: relative;
-            height: 20px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #5c5c5c, #838383);
-            width: 100%;
-            transition: width 1s linear;
-        }
-
-        .timer {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-weight: bold;
-            line-height: 20px;
-            font-size: 0.9rem;
-            z-index: 1;
-        }
-
-        .step-by-step {
-            font-size: 0.9rem;
+        /* Área de código */
+        pre {
+            background: #333;
+            padding: 10px;
             color: #fff;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
-            padding: 0.8rem;
-            margin-top: 1rem;
-            text-align: left;
-            line-height: 1.4;
-            font-weight: 500;
-        }
-
-        .reset-button {
-            background: #ff4141;
-            color: white;
-            border: none;
-            padding: 0.6rem 1rem;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 1rem;
-            width: 100%;
-            display: none;
-            transition: transform 0.3s ease;
-        }
-
-        .reset-button:hover {
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.4rem;
-            }
-            .code-box {
-                font-size: 0.9rem;
-                padding: 0.8rem;
-            }
-            .copy-button, .reset-button {
-                font-size: 0.9rem;
-                padding: 0.5rem 0.8rem;
-            }
-            .step-by-step {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Estilo para o modal de alerta */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            z-index: 100;
-            color: white;
-            width: 100%;
-            max-width: 400px;
-            transition: transform 0.3s ease;
-        }
-
-        .modal h2 {
-            color: #FFD700;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .modal p {
-            font-size: 1rem;
-            line-height: 1.3;
-            font-weight: 600;
+            font-size: 0.85rem;
+            overflow: auto;
         }
     </style>
 </head>
 <body>
-    <!-- Borda fluida animada -->
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>CSS Loaders - Exemplo</h1>
+    </header>
+
+    <!-- Container de loaders -->
     <div class="container">
-        <div class="blob"></div>
-        <h1>PIX Premium Copia e Cola</h1>
-        <div class="code-box" id="pix-code"></div>
-        <button class="copy-button" aria-label="Copiar Código PIX" onclick="copyCode()">
-            <i class="fas fa-copy"></i> Copiar Código PIX
-        </button>
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar">
-                <div class="timer" id="timer"></div> <!-- Colocando o contador dentro da barra -->
-            </div>
+
+        <!-- Loader 1 -->
+        <div class="loader-card">
+            <h2>Loader Circular</h2>
+            <div class="loader-1"></div>
+            <button class="copy-btn" onclick="copyCode('loader1')">Copiar Código</button>
+            <pre id="loader1">
+.loader-1 {
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(255, 255, 255, 0.2);
+    border-top: 10px solid #FFD700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+            </pre>
         </div>
-        <div class="step-by-step">
-            Passo a passo para fazer o PIX:<br>
-            1. Copie o código PIX acima.<br>
-            2. Acesse o aplicativo do seu banco.<br>
-            3. Escolha a opção de pagamento via PIX.<br>
-            4. Selecione "PIX Copia e Cola" e cole o código.<br>
-            5. Confirme o valor e finalize o pagamento.
+
+        <!-- Loader 2 -->
+        <div class="loader-card">
+            <h2>Loader Pulsante</h2>
+            <div class="loader-2"></div>
+            <button class="copy-btn" onclick="copyCode('loader2')">Copiar Código</button>
+            <pre id="loader2">
+.loader-2 {
+    width: 50px;
+    height: 50px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+            </pre>
         </div>
-        <button class="reset-button" id="reset-button" onclick="resetTimer()">Reiniciar</button>
+
+        <!-- Mais loaders podem ser adicionados aqui -->
+
     </div>
 
-    <!-- Modal de expiração -->
-    <div class="modal" id="expired-modal">
-        <h2>O tempo expirou!</h2>
-        <p>O código PIX não é mais válido. Clique em "Reiniciar" para gerar um novo código.</p>
-    </div>
-
-    <!-- JavaScript embutido -->
+    <!-- JavaScript para copiar o código -->
     <script>
-        // Obtendo o código PIX da URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const pixCode = urlParams.get('code') || 'CODIGO-PIX-TESTE';
-        document.getElementById('pix-code').innerText = pixCode;
-
-        const progressBar = document.getElementById('progress-bar');
-        const timerElement = document.getElementById('timer');
-        const resetButton = document.getElementById('reset-button');
-        const modal = document.getElementById('expired-modal');
-        const expirationTime = 15 * 60 * 1000; // 15 minutos em milissegundos
-        let startTime = new Date().getTime();
-        let timerInterval;
-
-        function updateProgressBar() {
-            const currentTime = new Date().getTime();
-            const timeElapsed = currentTime - startTime;
-            const timeRemaining = expirationTime - timeElapsed;
-            const progress = (timeRemaining / expirationTime) * 100;
-
-            progressBar.style.width = `${progress}%`;
-
-            const minutes = Math.floor(timeRemaining / 60000);
-            const seconds = Math.floor((timeRemaining % 60000) / 1000);
-
-            timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-            if (timeRemaining <= 0) {
-                clearInterval(timerInterval);
-                progressBar.style.width = '0%';
-                timerElement.innerText = '00:00';
-                showTimeExpired();
-            }
-        }
-
-        function showTimeExpired() {
-            const codeElement = document.getElementById('pix-code');
-            codeElement.innerText = 'O código expirou!';
-            codeElement.style.color = 'red';
-            resetButton.style.display = 'block';
-            modal.classList.add('active');
-        }
-
-        function resetTimer() {
-            startTime = new Date().getTime();
-            modal.classList.remove('active');
-            resetButton.style.display = 'none';
-            document.getElementById('pix-code').innerText = pixCode;
-            document.getElementById('pix-code').style.color = '#fff';
-            timerInterval = setInterval(updateProgressBar, 1000);
-        }
-
-        function copyCode() {
-            const codeElement = document.getElementById('pix-code');
-            navigator.clipboard.writeText(codeElement.innerText).then(() => {
-                document.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i> Código copiado!';
-                setTimeout(() => {
-                    document.querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i> Copiar Código PIX';
-                }, 2000);
+        function copyCode(loaderId) {
+            const code = document.getElementById(loaderId).innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Código copiado!');
             });
         }
-
-        timerInterval = setInterval(updateProgressBar, 1000);
     </script>
+    
 </body>
 </html>
